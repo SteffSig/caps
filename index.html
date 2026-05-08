@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Caps - test</title>
+<title>Caps - test 2</title>
 <style>
 body { font-family: -apple-system, sans-serif; padding: 1em; font-size: 14px; }
 #log { white-space: pre-wrap; background: #f0f0f0; padding: 1em; border-radius: 8px; }
 .ok { color: green; }
 .err { color: red; }
+.info { color: #555; }
 </style>
 </head>
 <body>
-<h1>Caps - test API pCloud</h1>
+<h1>Caps - test 2 : timestamps</h1>
 <div id="log">Chargement...</div>
 <script>
 const CODE = "kZf66iZydKuIwvpnOJNRuYtpu244mXTHgPk";
@@ -26,37 +27,95 @@ function ecrire(msg, classe) {
   log.appendChild(d);
 }
 
+// Parse le contenu du log et retourne {nom_image: secondes}
+function parserLog(texte) {
+  const tc = {};
+  const re = /(\S+\.(?:jpg|jpeg|png))\s+\(\d+x\d+px,\s*t=(?:(\d+)h)?(\d+)m(\d+)s/i;
+  for (const ligne of texte.split('\n')) {
+    const m = ligne.match(re);
+    if (m) {
+      const nom = m[1];
+      const h = m[2] ? parseInt(m[2]) : 0;
+      const mn = parseInt(m[3]);
+      const s = parseInt(m[4]);
+      tc[nom] = h * 3600 + mn * 60 + s;
+    }
+  }
+  return tc;
+}
+
+function formaterTC(s) {
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  if (h > 0) return `${h}h${String(m).padStart(2,'0')}m${String(sec).padStart(2,'0')}s`;
+  return `${m}m${String(sec).padStart(2,'0')}s`;
+}
+
+async function obtenirURLDirecte(fileid) {
+  const r = await fetch(`${API}/getpublinkdownload?code=${CODE}&fileid=${fileid}`);
+  const j = await r.json();
+  if (j.result !== 0) throw new Error("API getpublinkdownload result=" + j.result);
+  // Construit l'URL : https://[host][path]
+  return "https://" + j.hosts[0] + j.path;
+}
+
 async function test() {
   log.textContent = "";
-  ecrire("Appel API showpublink...");
   try {
-    const r = await fetch(`${API}/showpublink?code=${CODE}`);
-    const j = await r.json();
-    if (j.result !== 0) {
-      ecrire("ERREUR API : result=" + j.result + " - " + j.error, "err");
-      return;
-    }
-    ecrire("OK : reponse recue", "ok");
-    ecrire("Dossier racine : " + j.metadata.name);
+    // 1. Lister le dossier partage
+    ecrire("1. Appel showpublink...");
+    const r1 = await fetch(`${API}/showpublink?code=${CODE}`);
+    const j1 = await r1.json();
+    if (j1.result !== 0) throw new Error("showpublink result=" + j1.result);
+    ecrire("   OK", "ok");
+    
+    // 2. Trouver le dossier caps_* et le fichier log
+    const dossierCaps = j1.metadata.contents.find(x => x.isfolder && x.name.startsWith("caps_"));
+    if (!dossierCaps) throw new Error("Aucun dossier caps_* trouve");
+    ecrire("2. Dossier captures : " + dossierCaps.name, "info");
+    
+    const fichierLog = dossierCaps.contents.find(x => x.name.startsWith("log_caps_") && x.name.endsWith(".txt"));
+    if (!fichierLog) throw new Error("Aucun log_caps_*.txt trouve");
+    ecrire("   Log trouve : " + fichierLog.name + " (fileid=" + fichierLog.fileid + ")", "info");
+    
+    // 3. Obtenir l'URL directe du log
+    ecrire("3. Recuperation URL directe du log...");
+    const urlLog = await obtenirURLDirecte(fichierLog.fileid);
+    ecrire("   OK", "ok");
+    
+    // 4. Telecharger le contenu du log
+    ecrire("4. Telechargement du log...");
+    const r2 = await fetch(urlLog);
+    const texteLog = await r2.text();
+    ecrire("   OK : " + texteLog.length + " caracteres recus", "ok");
+    
+    // 5. Parser les timestamps
+    ecrire("5. Parsing des timestamps...");
+    const tc = parserLog(texteLog);
+    const noms = Object.keys(tc);
+    ecrire("   OK : " + noms.length + " images avec timestamp", "ok");
     ecrire("");
-    ecrire("Contenu :");
-    for (const item of j.metadata.contents) {
-      if (item.isfolder) {
-        ecrire("  [DOSSIER] " + item.name);
-        if (item.contents) {
-          let nbImages = 0, nbLogs = 0;
-          for (const sub of item.contents) {
-            if (sub.contenttype && sub.contenttype.startsWith("image/")) nbImages++;
-            else if (sub.name.startsWith("log_caps_")) nbLogs++;
-          }
-          ecrire("    -> " + nbImages + " image(s), " + nbLogs + " log(s)");
-        }
-      } else {
-        ecrire("  [FICHIER] " + item.name + " (" + item.size + " octets)");
-      }
+    
+    // 6. Afficher les 5 premiers et 5 derniers
+    ecrire("Echantillon (5 premiers) :");
+    noms.slice(0, 5).forEach(n => ecrire("  " + n + " -> " + formaterTC(tc[n])));
+    ecrire("");
+    ecrire("Echantillon (5 derniers) :");
+    noms.slice(-5).forEach(n => ecrire("  " + n + " -> " + formaterTC(tc[n])));
+    
+    // 7. Verifier la coherence : nb images dans le dossier vs nb timestamps
+    const nbImagesDossier = dossierCaps.contents.filter(x => x.contenttype && x.contenttype.startsWith("image/")).length;
+    ecrire("");
+    ecrire("Coherence : " + nbImagesDossier + " image(s) dans le dossier, " + noms.length + " timestamp(s) dans le log");
+    if (nbImagesDossier === noms.length) {
+      ecrire("OK : tous les timestamps correspondent au nombre d'images", "ok");
+    } else {
+      ecrire("ATTENTION : ecart entre images et timestamps", "err");
     }
+    
   } catch (e) {
-    ecrire("ERREUR fetch : " + e.message, "err");
+    ecrire("ERREUR : " + e.message, "err");
   }
 }
 
