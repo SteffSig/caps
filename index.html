@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caps - test</title>
+<style>
+body { font-family: -apple-system, sans-serif; padding: 1em; font-size: 14px; }
+#log { white-space: pre-wrap; background: #f0f0f0; padding: 1em; border-radius: 8px; }
+.ok { color: green; }
+.err { color: red; }
+</style>
+</head>
+<body>
+<h1>Caps - test API pCloud</h1>
+<div id="log">Chargement...</div>
+<script>
+const CODE = "kZf66iZydKuIwvpnOJNRuYtpu244mXTHgPk";
+const API = "https://eapi.pcloud.com";
+
+const log = document.getElementById("log");
+function ecrire(msg, classe) {
+  const d = document.createElement("div");
+  if (classe) d.className = classe;
+  d.textContent = msg;
+  log.appendChild(d);
+}
+
+async function test() {
+  log.textContent = "";
+  ecrire("Appel API showpublink...");
+  try {
+    const r = await fetch(`${API}/showpublink?code=${CODE}`);
+    const j = await r.json();
+    if (j.result !== 0) {
+      ecrire("ERREUR API : result=" + j.result + " - " + j.error, "err");
+      return;
+    }
+    ecrire("OK : reponse recue", "ok");
+    ecrire("Dossier racine : " + j.metadata.name);
+    ecrire("");
+    ecrire("Contenu :");
+    for (const item of j.metadata.contents) {
+      if (item.isfolder) {
+        ecrire("  [DOSSIER] " + item.name);
+        if (item.contents) {
+          let nbImages = 0, nbLogs = 0;
+          for (const sub of item.contents) {
+            if (sub.contenttype && sub.contenttype.startsWith("image/")) nbImages++;
+            else if (sub.name.startsWith("log_caps_")) nbLogs++;
+          }
+          ecrire("    -> " + nbImages + " image(s), " + nbLogs + " log(s)");
+        }
+      } else {
+        ecrire("  [FICHIER] " + item.name + " (" + item.size + " octets)");
+      }
+    }
+  } catch (e) {
+    ecrire("ERREUR fetch : " + e.message, "err");
+  }
+}
+
+test();
+</script>
+</body>
+</html>
