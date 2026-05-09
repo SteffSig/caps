@@ -2,16 +2,16 @@
 ============================================================
   CAPTURES DE VISAGES DANS UNE VIDEO  (v2)
 ============================================================
-  Date : 2026-04-21 20:33:18
+  Date : 2026-04-22 08:16:29
 
 [1/5] Recuperation de la video...
-  Video : 251016_09_58_Bel_Bien ensemble.mp4
-  Sortie : P:\SAUVERGARDE\firefox-\_Bel_Bien ensemble\IMG_EXTRACT\caps_251016_09_58_Bel_Bien ensemble
+  Video : 251017_09_57_Bel_Bien ensemble.mp4
+  Sortie : P:\SAUVERGARDE\firefox-\_Bel_Bien ensemble\IMG_EXTRACT\caps_251017_09_57_Bel_Bien ensemble
 
 [2/5] Copie vers le repertoire de travail...
   Repertoire purge : C:\Temp\Videos\detection
-  Copie en cours : P:\SAUVERGARDE\firefox-\_Bel_Bien ensemble\251016_09_58_Bel_Bien ensemble.mp4
-           vers  : C:\Temp\Videos\detection\251016_09_58_Bel_Bien ensemble.mp4
+  Copie en cours : P:\SAUVERGARDE\firefox-\_Bel_Bien ensemble\251017_09_57_Bel_Bien ensemble.mp4
+           vers  : C:\Temp\Videos\detection\251017_09_57_Bel_Bien ensemble.mp4
   Copie terminee.
 
 [3/5] Chargement des modeles...
@@ -27,382 +27,250 @@
     Deduplication            : sim > 0.9
 
 [4/5] Scan de la video...
-  Duree       : 2426s (40.4 min)
+  Duree       : 2412s (40.2 min)
   Echantillon : 1 frame toutes les 5s
 
-    1.9%  |  10 frames  |  5 personne(s)  |  3 rejets  |  ~1385s restant
-    3.9%  |  20 frames  |  18 personne(s)  |  9 rejets  |  ~1486s restant
-    6.0%  |  30 frames  |  23 personne(s)  |  19 rejets  |  ~1582s restant
-    8.0%  |  40 frames  |  29 personne(s)  |  32 rejets  |  ~1548s restant
-   10.1%  |  50 frames  |  30 personne(s)  |  35 rejets  |  ~1458s restant
-   12.2%  |  60 frames  |  36 personne(s)  |  39 rejets  |  ~1385s restant
-   14.2%  |  70 frames  |  39 personne(s)  |  54 rejets  |  ~1328s restant
-   16.3%  |  80 frames  |  42 personne(s)  |  60 rejets  |  ~1284s restant
-   18.3%  |  90 frames  |  42 personne(s)  |  72 rejets  |  ~1229s restant
-   20.4%  |  100 frames  |  42 personne(s)  |  78 rejets  |  ~1218s restant
-   22.5%  |  110 frames  |  43 personne(s)  |  87 rejets  |  ~1212s restant
-   24.5%  |  120 frames  |  44 personne(s)  |  91 rejets  |  ~1170s restant
-   26.6%  |  130 frames  |  47 personne(s)  |  95 rejets  |  ~1135s restant
-   28.7%  |  140 frames  |  47 personne(s)  |  97 rejets  |  ~1097s restant
-   30.7%  |  150 frames  |  49 personne(s)  |  104 rejets  |  ~1072s restant
-   32.8%  |  160 frames  |  53 personne(s)  |  129 rejets  |  ~1037s restant
-   34.8%  |  170 frames  |  53 personne(s)  |  141 rejets  |  ~998s restant
-   36.9%  |  180 frames  |  53 personne(s)  |  142 rejets  |  ~969s restant
-   39.0%  |  190 frames  |  55 personne(s)  |  146 rejets  |  ~941s restant
-   41.0%  |  200 frames  |  63 personne(s)  |  166 rejets  |  ~911s restant
-   43.1%  |  210 frames  |  65 personne(s)  |  178 rejets  |  ~880s restant
-   45.1%  |  220 frames  |  66 personne(s)  |  194 rejets  |  ~850s restant
-   47.2%  |  230 frames  |  66 personne(s)  |  201 rejets  |  ~818s restant
-   49.3%  |  240 frames  |  66 personne(s)  |  213 rejets  |  ~785s restant
-   51.3%  |  250 frames  |  71 personne(s)  |  226 rejets  |  ~751s restant
-   53.4%  |  260 frames  |  72 personne(s)  |  234 rejets  |  ~717s restant
-   55.4%  |  270 frames  |  76 personne(s)  |  241 rejets  |  ~681s restant
-   57.5%  |  280 frames  |  80 personne(s)  |  248 rejets  |  ~645s restant
-   59.6%  |  290 frames  |  83 personne(s)  |  252 rejets  |  ~609s restant
-   61.6%  |  300 frames  |  91 personne(s)  |  261 rejets  |  ~574s restant
-   63.7%  |  310 frames  |  92 personne(s)  |  267 rejets  |  ~541s restant
-   65.8%  |  320 frames  |  92 personne(s)  |  275 rejets  |  ~507s restant
-   67.8%  |  330 frames  |  100 personne(s)  |  285 rejets  |  ~476s restant
-   69.9%  |  340 frames  |  107 personne(s)  |  297 rejets  |  ~448s restant
-   71.9%  |  350 frames  |  111 personne(s)  |  304 rejets  |  ~421s restant
-   74.0%  |  360 frames  |  114 personne(s)  |  311 rejets  |  ~389s restant
-   76.1%  |  370 frames  |  114 personne(s)  |  312 rejets  |  ~359s restant
-   78.1%  |  380 frames  |  117 personne(s)  |  322 rejets  |  ~327s restant
-   80.2%  |  390 frames  |  120 personne(s)  |  329 rejets  |  ~296s restant
-   82.2%  |  400 frames  |  122 personne(s)  |  337 rejets  |  ~264s restant
-   84.3%  |  410 frames  |  125 personne(s)  |  345 rejets  |  ~233s restant
-   86.4%  |  420 frames  |  125 personne(s)  |  351 rejets  |  ~202s restant
-   88.4%  |  430 frames  |  126 personne(s)  |  361 rejets  |  ~172s restant
-   90.5%  |  440 frames  |  145 personne(s)  |  395 rejets  |  ~143s restant
-   92.5%  |  450 frames  |  152 personne(s)  |  409 rejets  |  ~112s restant
-   94.6%  |  460 frames  |  156 personne(s)  |  418 rejets  |  ~81s restant
-   96.7%  |  470 frames  |  162 personne(s)  |  436 rejets  |  ~50s restant
-   98.7%  |  480 frames  |  162 personne(s)  |  447 rejets  |  ~19s restant
+    1.9%  |  10 frames  |  6 personne(s)  |  8 rejets  |  ~974s restant
+    3.9%  |  20 frames  |  12 personne(s)  |  17 rejets  |  ~1035s restant
+    6.0%  |  30 frames  |  16 personne(s)  |  28 rejets  |  ~1010s restant
+    8.1%  |  40 frames  |  23 personne(s)  |  38 rejets  |  ~1061s restant
+   10.2%  |  50 frames  |  27 personne(s)  |  51 rejets  |  ~1051s restant
+   12.2%  |  60 frames  |  28 personne(s)  |  55 rejets  |  ~1029s restant
+   14.3%  |  70 frames  |  44 personne(s)  |  80 rejets  |  ~1001s restant
+   16.4%  |  80 frames  |  47 personne(s)  |  99 rejets  |  ~979s restant
+   18.4%  |  90 frames  |  47 personne(s)  |  101 rejets  |  ~964s restant
+   20.5%  |  100 frames  |  48 personne(s)  |  104 rejets  |  ~948s restant
+   22.6%  |  110 frames  |  56 personne(s)  |  151 rejets  |  ~942s restant
+   24.7%  |  120 frames  |  57 personne(s)  |  168 rejets  |  ~922s restant
+   26.7%  |  130 frames  |  58 personne(s)  |  182 rejets  |  ~905s restant
+   28.8%  |  140 frames  |  58 personne(s)  |  184 rejets  |  ~892s restant
+   30.9%  |  150 frames  |  60 personne(s)  |  187 rejets  |  ~872s restant
+   33.0%  |  160 frames  |  62 personne(s)  |  193 rejets  |  ~853s restant
+   35.0%  |  170 frames  |  64 personne(s)  |  206 rejets  |  ~830s restant
+   37.1%  |  180 frames  |  64 personne(s)  |  209 rejets  |  ~807s restant
+   39.2%  |  190 frames  |  66 personne(s)  |  228 rejets  |  ~784s restant
+   41.3%  |  200 frames  |  68 personne(s)  |  237 rejets  |  ~763s restant
+   43.3%  |  210 frames  |  70 personne(s)  |  251 rejets  |  ~734s restant
+   45.4%  |  220 frames  |  71 personne(s)  |  260 rejets  |  ~706s restant
+   47.5%  |  230 frames  |  76 personne(s)  |  272 rejets  |  ~678s restant
+   49.5%  |  240 frames  |  80 personne(s)  |  278 rejets  |  ~650s restant
+   51.6%  |  250 frames  |  82 personne(s)  |  281 rejets  |  ~624s restant
+   53.7%  |  260 frames  |  83 personne(s)  |  291 rejets  |  ~596s restant
+   55.8%  |  270 frames  |  83 personne(s)  |  298 rejets  |  ~569s restant
+   57.8%  |  280 frames  |  83 personne(s)  |  301 rejets  |  ~543s restant
+   59.9%  |  290 frames  |  83 personne(s)  |  310 rejets  |  ~518s restant
+   62.0%  |  300 frames  |  84 personne(s)  |  313 rejets  |  ~492s restant
+   64.1%  |  310 frames  |  84 personne(s)  |  316 rejets  |  ~466s restant
+   66.1%  |  320 frames  |  87 personne(s)  |  325 rejets  |  ~439s restant
+   68.2%  |  330 frames  |  87 personne(s)  |  330 rejets  |  ~411s restant
+   70.3%  |  340 frames  |  87 personne(s)  |  334 rejets  |  ~386s restant
+   72.3%  |  350 frames  |  88 personne(s)  |  339 rejets  |  ~361s restant
+   74.4%  |  360 frames  |  89 personne(s)  |  347 rejets  |  ~335s restant
+   76.5%  |  370 frames  |  90 personne(s)  |  353 rejets  |  ~309s restant
+   78.6%  |  380 frames  |  90 personne(s)  |  364 rejets  |  ~284s restant
+   80.6%  |  390 frames  |  90 personne(s)  |  369 rejets  |  ~256s restant
+   82.7%  |  400 frames  |  91 personne(s)  |  375 rejets  |  ~228s restant
+   84.8%  |  410 frames  |  92 personne(s)  |  381 rejets  |  ~201s restant
+   86.9%  |  420 frames  |  92 personne(s)  |  388 rejets  |  ~173s restant
+   88.9%  |  430 frames  |  92 personne(s)  |  397 rejets  |  ~146s restant
+   91.0%  |  440 frames  |  94 personne(s)  |  411 rejets  |  ~119s restant
+   93.1%  |  450 frames  |  98 personne(s)  |  430 rejets  |  ~91s restant
+   95.1%  |  460 frames  |  99 personne(s)  |  435 rejets  |  ~64s restant
+   97.2%  |  470 frames  |  103 personne(s)  |  438 rejets  |  ~37s restant
+   99.3%  |  480 frames  |  104 personne(s)  |  444 rejets  |  ~9s restant
 
-  Scan termine en 1511s
-  Ratio enregistre dans l'historique : 0.623 sec/sec
-  486 frames analysees
-  163 personne(s) distincte(s) detectee(s)
+  Scan termine en 1315s
+  Ratio enregistre dans l'historique : 0.545 sec/sec
+  483 frames analysees
+  104 personne(s) distincte(s) detectee(s)
 
   Rejets par filtre :
-    Confiance < 0.95    : 82
-    Crop < 112px        : 108
-    Flou (Laplacien)     : 251
+    Confiance < 0.95    : 73
+    Crop < 112px        : 147
+    Flou (Laplacien)     : 222
     Trop sombre          : 0
-    Surexpose            : 1
-    Pas un visage        : 9
-    ---- TOTAL rejets    : 451
+    Surexpose            : 0
+    Pas un visage        : 5
+    ---- TOTAL rejets    : 447
 
 [5/5] Deduplication et sauvegarde des captures...
-  84 cluster(s) sans capture valide ignore(s) (toutes frames rejetees par les filtres qualite)
-
-  A (97 detect., 17 doublons retires) :
-    A_1.jpg  (153x244px, t=7m35s, conf=1.00, qualite=0.95)
-    A_2.jpg  (345x473px, t=33m00s, conf=1.00, qualite=0.90)
-    A_3.jpg  (113x140px, t=16m15s, conf=1.00, qualite=0.90)
-    A_4.jpg  (176x248px, t=9m25s, conf=1.00, qualite=0.83)
-
-  B (89 detect., 19 doublons retires) :
-    B_1.jpg  (113x153px, t=27m00s, conf=1.00, qualite=0.94)
-    B_2.jpg  (660x845px, t=10m45s, conf=1.00, qualite=0.77)
-    B_3.jpg  (289x440px, t=11m10s, conf=1.00, qualite=0.72)
-    B_4.jpg  (252x373px, t=25m35s, conf=1.00, qualite=0.70)
-
-  C (49 detect., 8 doublons retires) :
-    C_1.jpg  (112x153px, t=27m00s, conf=1.00, qualite=0.95)
-    C_2.jpg  (149x208px, t=9m25s, conf=1.00, qualite=0.76)
-    C_3.jpg  (220x308px, t=38m35s, conf=1.00, qualite=0.74)
-    C_4.jpg  (588x808px, t=11m20s, conf=1.00, qualite=0.67)
-
-  D (41 detect., 8 doublons retires) :
-    D_1.jpg  (197x268px, t=30m45s, conf=1.00, qualite=0.72)
-    D_2.jpg  (197x273px, t=38m35s, conf=1.00, qualite=0.71)
-    D_3.jpg  (717x921px, t=15m40s, conf=1.00, qualite=0.71)
-    D_4.jpg  (784x963px, t=14m50s, conf=1.00, qualite=0.69)
-
-  E (36 detect., 7 doublons retires) :
-    E_1.jpg  (321x345px, t=10m35s, conf=1.00, qualite=0.83)
-    E_2.jpg  (284x460px, t=36m50s, conf=1.00, qualite=0.80)
-    E_3.jpg  (437x557px, t=1m50s, conf=1.00, qualite=0.71)
-    E_4.jpg  (400x536px, t=37m15s, conf=1.00, qualite=0.68)
-
-  F (32 detect., 4 doublons retires) :
-    F_1.jpg  (140x205px, t=36m10s, conf=1.00, qualite=0.89)
-    F_2.jpg  (300x413px, t=0m45s, conf=1.00, qualite=0.79)
-    F_3.jpg  (324x384px, t=4m50s, conf=1.00, qualite=0.74)
-    F_4.jpg  (497x641px, t=12m05s, conf=1.00, qualite=0.73)
-
-  G (30 detect., 5 doublons retires) :
-    G_1.jpg  (208x256px, t=29m00s, conf=1.00, qualite=0.76)
-    G_2.jpg  (604x833px, t=35m00s, conf=1.00, qualite=0.74)
-    G_3.jpg  (301x381px, t=27m45s, conf=1.00, qualite=0.72)
-    G_4.jpg  (708x978px, t=28m20s, conf=1.00, qualite=0.70)
-
-  H (25 detect., 12 doublons retires) :
-    H_1.jpg  (469x627px, t=2m00s, conf=1.00, qualite=0.84)
-    H_2.jpg  (422x842px, t=3m00s, conf=1.00, qualite=0.83)
-    H_3.jpg  (357x465px, t=36m00s, conf=1.00, qualite=0.80)
-    H_4.jpg  (418x755px, t=1m25s, conf=1.00, qualite=0.80)
-
-  I (23 detect., 1 doublons retires) :
-    I_1.jpg  (129x180px, t=20m30s, conf=1.00, qualite=0.98)
-    I_2.jpg  (129x157px, t=15m30s, conf=0.96, qualite=0.97)
-    I_3.jpg  (112x136px, t=2m10s, conf=0.96, qualite=0.97)
-    I_4.jpg  (117x173px, t=15m50s, conf=0.97, qualite=0.95)
-
-  J (20 detect., 3 doublons retires) :
-    J_1.jpg  (217x328px, t=30m45s, conf=1.00, qualite=0.95)
-    J_2.jpg  (341x445px, t=12m20s, conf=0.98, qualite=0.94)
-    J_3.jpg  (349x441px, t=11m50s, conf=1.00, qualite=0.91)
-    J_4.jpg  (308x437px, t=10m35s, conf=1.00, qualite=0.86)
-
-  K (14 detect., 0 doublons retires) :
-    K_1.jpg  (149x205px, t=7m35s, conf=1.00, qualite=0.84)
-    K_2.jpg  (353x552px, t=7m10s, conf=1.00, qualite=0.62)
-
-  L (14 detect., 2 doublons retires) :
-    L_1.jpg  (648x837px, t=30m30s, conf=1.00, qualite=0.76)
-    L_2.jpg  (596x757px, t=30m15s, conf=1.00, qualite=0.68)
-    L_3.jpg  (617x820px, t=35m10s, conf=1.00, qualite=0.66)
-    L_4.jpg  (597x776px, t=30m40s, conf=1.00, qualite=0.74)
-
-  M (11 detect., 0 doublons retires) :
-    M_1.jpg  (143x265px, t=35m45s, conf=1.00, qualite=0.82)
-    M_2.jpg  (325x489px, t=15m00s, conf=1.00, qualite=0.67)
-
-  N (10 detect., 0 doublons retires) :
-    N_1.jpg  (208x284px, t=30m45s, conf=1.00, qualite=0.78)
-    N_2.jpg  (397x537px, t=15m00s, conf=1.00, qualite=0.66)
-
-  O (10 detect., 0 doublons retires) :
-    O_1.jpg  (180x248px, t=15m30s, conf=1.00, qualite=0.96)
-    O_2.jpg  (124x181px, t=17m20s, conf=1.00, qualite=0.95)
-    O_3.jpg  (112x156px, t=16m35s, conf=1.00, qualite=0.94)
-    O_4.jpg  (133x177px, t=19m45s, conf=1.00, qualite=0.94)
-
-  P (8 detect., 0 doublons retires) :
-    P_1.jpg  (117x156px, t=2m50s, conf=0.98, qualite=0.92)
-
-  Q (8 detect., 0 doublons retires) :
-    Q_1.jpg  (320x428px, t=11m50s, conf=1.00, qualite=0.72)
-    Q_2.jpg  (308x469px, t=12m20s, conf=1.00, qualite=0.70)
-    Q_3.jpg  (304x381px, t=10m35s, conf=1.00, qualite=0.70)
-    Q_4.jpg  (217x270px, t=38m35s, conf=1.00, qualite=0.68)
-
-  R (6 detect., 0 doublons retires) :
-    R_1.jpg  (344x414px, t=36m05s, conf=1.00, qualite=0.65)
-    R_2.jpg  (544x710px, t=39m10s, conf=1.00, qualite=0.65)
-    R_3.jpg  (181x244px, t=1m35s, conf=1.00, qualite=0.63)
-
-  S (6 detect., 1 doublons retires) :
-    S_1.jpg  (588x728px, t=21m40s, conf=1.00, qualite=0.73)
-    S_2.jpg  (157x217px, t=21m55s, conf=1.00, qualite=0.69)
-    S_3.jpg  (821x1032px, t=21m35s, conf=1.00, qualite=0.67)
+  61 cluster(s) sans capture valide ignore(s) (toutes frames rejetees par les filtres qualite)
+
+  A (83 detect., 15 doublons retires) :
+    A_1.jpg  (412x569px, t=8m10s, conf=1.00, qualite=0.79)
+    A_2.jpg  (573x772px, t=38m55s, conf=1.00, qualite=0.78)
+    A_3.jpg  (156x265px, t=24m10s, conf=1.00, qualite=0.73)
+    A_4.jpg  (397x528px, t=11m55s, conf=1.00, qualite=0.73)
+
+  B (66 detect., 18 doublons retires) :
+    B_1.jpg  (233x292px, t=39m45s, conf=1.00, qualite=0.91)
+    B_2.jpg  (141x180px, t=33m45s, conf=1.00, qualite=0.90)
+    B_3.jpg  (600x752px, t=29m00s, conf=1.00, qualite=0.77)
+    B_4.jpg  (556x700px, t=25m00s, conf=1.00, qualite=0.77)
+
+  C (62 detect., 32 doublons retires) :
+    C_1.jpg  (157x205px, t=24m10s, conf=1.00, qualite=0.93)
+    C_2.jpg  (173x233px, t=22m20s, conf=1.00, qualite=0.89)
+    C_3.jpg  (209x292px, t=14m15s, conf=1.00, qualite=0.82)
+    C_4.jpg  (273x396px, t=22m45s, conf=1.00, qualite=0.73)
+
+  D (49 detect., 3 doublons retires) :
+    D_1.jpg  (244x328px, t=39m10s, conf=1.00, qualite=0.93)
+    D_2.jpg  (133x180px, t=33m45s, conf=1.00, qualite=0.85)
+    D_3.jpg  (245x324px, t=38m25s, conf=1.00, qualite=0.84)
+    D_4.jpg  (137x200px, t=26m25s, conf=1.00, qualite=0.81)
+
+  E (41 detect., 24 doublons retires) :
+    E_1.jpg  (704x861px, t=12m00s, conf=1.00, qualite=0.79)
+    E_2.jpg  (488x656px, t=3m00s, conf=0.99, qualite=0.77)
+    E_3.jpg  (677x894px, t=13m10s, conf=1.00, qualite=0.75)
+    E_4.jpg  (709x855px, t=12m40s, conf=1.00, qualite=0.74)
+
+  F (38 detect., 6 doublons retires) :
+    F_1.jpg  (432x973px, t=12m10s, conf=1.00, qualite=0.78)
+    F_2.jpg  (224x292px, t=39m10s, conf=1.00, qualite=0.76)
+    F_3.jpg  (205x280px, t=38m25s, conf=1.00, qualite=0.75)
+    F_4.jpg  (493x1032px, t=10m30s, conf=1.00, qualite=0.75)
+
+  G (35 detect., 2 doublons retires) :
+    G_1.jpg  (124x164px, t=33m45s, conf=1.00, qualite=0.78)
+    G_2.jpg  (232x297px, t=34m50s, conf=1.00, qualite=0.74)
+    G_3.jpg  (621x748px, t=39m00s, conf=1.00, qualite=0.73)
+    G_4.jpg  (224x296px, t=33m30s, conf=1.00, qualite=0.71)
+
+  H (31 detect., 1 doublons retires) :
+    H_1.jpg  (461x648px, t=20m40s, conf=1.00, qualite=0.69)
+    H_2.jpg  (205x273px, t=17m50s, conf=1.00, qualite=0.67)
+    H_3.jpg  (773x846px, t=20m00s, conf=1.00, qualite=0.67)
+    H_4.jpg  (536x780px, t=18m40s, conf=1.00, qualite=0.66)
+
+  I (28 detect., 6 doublons retires) :
+    I_1.jpg  (592x760px, t=22m40s, conf=1.00, qualite=0.72)
+    I_2.jpg  (677x843px, t=24m00s, conf=1.00, qualite=0.70)
+    I_3.jpg  (116x148px, t=15m35s, conf=1.00, qualite=0.69)
+    I_4.jpg  (124x152px, t=13m15s, conf=1.00, qualite=0.69)
+
+  J (22 detect., 1 doublons retires) :
+    J_1.jpg  (369x430px, t=16m00s, conf=1.00, qualite=0.83)
+    J_2.jpg  (249x345px, t=38m25s, conf=1.00, qualite=0.77)
+    J_3.jpg  (245x341px, t=39m10s, conf=1.00, qualite=0.77)
+    J_4.jpg  (577x784px, t=37m40s, conf=1.00, qualite=0.66)
+
+  K (18 detect., 6 doublons retires) :
+    K_1.jpg  (673x890px, t=4m00s, conf=1.00, qualite=0.70)
+    K_2.jpg  (641x765px, t=5m30s, conf=1.00, qualite=0.67)
+    K_3.jpg  (360x588px, t=4m40s, conf=1.00, qualite=0.63)
+    K_4.jpg  (445x584px, t=4m20s, conf=1.00, qualite=0.62)
+
+  L (15 detect., 0 doublons retires) :
+    L_1.jpg  (120x157px, t=36m40s, conf=1.00, qualite=0.96)
+    L_2.jpg  (112x141px, t=15m20s, conf=0.98, qualite=0.95)
+    L_3.jpg  (224x308px, t=38m25s, conf=1.00, qualite=0.76)
+
+  M (14 detect., 0 doublons retires) :
+    M_1.jpg  (449x732px, t=8m00s, conf=1.00, qualite=0.69)
+    M_2.jpg  (257x364px, t=1m15s, conf=1.00, qualite=0.67)
+    M_3.jpg  (228x332px, t=9m30s, conf=1.00, qualite=0.66)
+    M_4.jpg  (241x352px, t=10m15s, conf=1.00, qualite=0.63)
+
+  N (9 detect., 4 doublons retires) :
+    N_1.jpg  (372x625px, t=3m00s, conf=1.00, qualite=0.80)
+    N_2.jpg  (339x652px, t=3m30s, conf=1.00, qualite=0.79)
+    N_3.jpg  (324x456px, t=16m00s, conf=1.00, qualite=0.73)
+    N_4.jpg  (224x285px, t=38m25s, conf=1.00, qualite=0.71)
+
+  O (8 detect., 1 doublons retires) :
+    O_1.jpg  (250x413px, t=12m35s, conf=1.00, qualite=0.77)
+    O_2.jpg  (220x253px, t=39m10s, conf=1.00, qualite=0.76)
+
+  P (7 detect., 0 doublons retires) :
+    P_1.jpg  (684x829px, t=12m25s, conf=1.00, qualite=0.65)
+
+  Q (5 detect., 0 doublons retires) :
+    Q_1.jpg  (260x344px, t=16m05s, conf=0.99, qualite=0.87)
+    Q_2.jpg  (192x264px, t=38m25s, conf=0.95, qualite=0.82)
+    Q_3.jpg  (193x265px, t=39m10s, conf=0.98, qualite=0.81)
+
+  R (4 detect., 0 doublons retires) :
+    R_1.jpg  (288x457px, t=2m45s, conf=1.00, qualite=0.74)
+
+  S (3 detect., 0 doublons retires) :
+    S_1.jpg  (272x337px, t=9m10s, conf=1.00, qualite=0.65)
+    S_2.jpg  (236x312px, t=8m50s, conf=1.00, qualite=0.65)
 
-  T (5 detect., 0 doublons retires) :
-    T_1.jpg  (137x181px, t=35m55s, conf=1.00, qualite=0.80)
-    T_2.jpg  (180x293px, t=1m35s, conf=1.00, qualite=0.69)
+  T (3 detect., 0 doublons retires) :
+    T_1.jpg  (351x944px, t=12m25s, conf=1.00, qualite=0.66)
 
-  U (5 detect., 0 doublons retires) :
-    U_1.jpg  (225x301px, t=21m55s, conf=1.00, qualite=0.63)
+  U (3 detect., 1 doublons retires) :
+    U_1.jpg  (260x341px, t=39m10s, conf=1.00, qualite=0.75)
+    U_2.jpg  (348x348px, t=16m05s, conf=1.00, qualite=0.75)
 
-  V (5 detect., 1 doublons retires) :
-    V_1.jpg  (212x261px, t=4m20s, conf=1.00, qualite=0.57)
+  V (3 detect., 0 doublons retires) :
+    V_1.jpg  (237x377px, t=17m50s, conf=1.00, qualite=0.64)
 
-  W (5 detect., 1 doublons retires) :
-    W_1.jpg  (197x256px, t=4m20s, conf=1.00, qualite=0.63)
+  W (2 detect., 1 doublons retires) :
+    W_1.jpg  (652x861px, t=20m20s, conf=1.00, qualite=0.95)
 
-  X (5 detect., 0 doublons retires) :
-    X_1.jpg  (412x443px, t=33m20s, conf=1.00, qualite=0.67)
+  X (2 detect., 0 doublons retires) :
+    X_1.jpg  (248x369px, t=37m15s, conf=1.00, qualite=0.65)
 
-  Y (4 detect., 0 doublons retires) :
-    Y_1.jpg  (338x661px, t=1m25s, conf=1.00, qualite=0.65)
-    Y_2.jpg  (338x648px, t=1m40s, conf=1.00, qualite=0.61)
+  Y (2 detect., 1 doublons retires) :
+    Y_1.jpg  (228x296px, t=38m25s, conf=1.00, qualite=0.70)
 
-  Z (4 detect., 0 doublons retires) :
-    Z_1.jpg  (116x144px, t=35m35s, conf=1.00, qualite=0.90)
-    Z_2.jpg  (161x212px, t=1m35s, conf=0.99, qualite=0.63)
+  Z (1 detect., 0 doublons retires) :
+    Z_1.jpg  (140x221px, t=0m55s, conf=0.99, qualite=0.84)
 
-  AA (4 detect., 1 doublons retires) :
-    AA_1.jpg  (296x385px, t=22m30s, conf=1.00, qualite=0.66)
-    AA_2.jpg  (172x213px, t=4m20s, conf=1.00, qualite=0.65)
-    AA_3.jpg  (408x540px, t=23m45s, conf=1.00, qualite=0.60)
+  AA (1 detect., 0 doublons retires) :
+    AA_1.jpg  (433x605px, t=4m25s, conf=1.00, qualite=0.56)
 
-  AB (4 detect., 0 doublons retires) :
-    AB_1.jpg  (169x228px, t=37m20s, conf=1.00, qualite=0.77)
+  AB (1 detect., 0 doublons retires) :
+    AB_1.jpg  (208x293px, t=8m50s, conf=1.00, qualite=0.69)
 
-  AC (4 detect., 1 doublons retires) :
-    AC_1.jpg  (429x565px, t=39m45s, conf=1.00, qualite=0.92)
-    AC_2.jpg  (161x213px, t=27m45s, conf=1.00, qualite=0.67)
-    AC_3.jpg  (181x240px, t=27m40s, conf=1.00, qualite=0.63)
+  AC (1 detect., 0 doublons retires) :
+    AC_1.jpg  (225x317px, t=10m00s, conf=1.00, qualite=0.62)
 
-  AD (4 detect., 0 doublons retires) :
-    AD_1.jpg  (125x164px, t=35m50s, conf=0.98, qualite=0.92)
-    AD_2.jpg  (257x388px, t=36m20s, conf=1.00, qualite=0.59)
-    AD_3.jpg  (137x165px, t=35m55s, conf=0.99, qualite=0.76)
+  AD (1 detect., 0 doublons retires) :
+    AD_1.jpg  (508x370px, t=16m00s, conf=0.99, qualite=0.75)
 
-  AE (3 detect., 0 doublons retires) :
-    AE_1.jpg  (356x501px, t=36m05s, conf=1.00, qualite=0.72)
-    AE_2.jpg  (177x232px, t=1m35s, conf=1.00, qualite=0.69)
-    AE_3.jpg  (713x755px, t=38m55s, conf=1.00, qualite=0.68)
+  AE (1 detect., 0 doublons retires) :
+    AE_1.jpg  (341x409px, t=18m35s, conf=1.00, qualite=0.65)
 
-  AF (3 detect., 0 doublons retires) :
-    AF_1.jpg  (169x232px, t=1m35s, conf=1.00, qualite=0.61)
+  AF (1 detect., 0 doublons retires) :
+    AF_1.jpg  (549x825px, t=18m55s, conf=1.00, qualite=0.58)
 
-  AG (3 detect., 0 doublons retires) :
-    AG_1.jpg  (173x216px, t=1m35s, conf=1.00, qualite=0.66)
+  AG (1 detect., 0 doublons retires) :
+    AG_1.jpg  (965x1080px, t=19m35s, conf=1.00, qualite=0.59)
 
-  AH (3 detect., 0 doublons retires) :
-    AH_1.jpg  (121x164px, t=16m35s, conf=0.98, qualite=0.98)
-    AH_2.jpg  (294x548px, t=10m35s, conf=1.00, qualite=0.94)
+  AH (1 detect., 0 doublons retires) :
+    AH_1.jpg  (836x1021px, t=19m55s, conf=1.00, qualite=0.94)
 
-  AI (3 detect., 2 doublons retires) :
-    AI_1.jpg  (661x912px, t=2m35s, conf=0.98, qualite=0.86)
+  AI (1 detect., 0 doublons retires) :
+    AI_1.jpg  (837x1007px, t=20m45s, conf=1.00, qualite=0.93)
 
-  AJ (3 detect., 0 doublons retires) :
-    AJ_1.jpg  (156x185px, t=2m50s, conf=0.98, qualite=0.97)
+  AJ (1 detect., 0 doublons retires) :
+    AJ_1.jpg  (436x685px, t=21m05s, conf=1.00, qualite=0.65)
 
-  AK (3 detect., 0 doublons retires) :
-    AK_1.jpg  (120x152px, t=21m05s, conf=1.00, qualite=0.97)
-    AK_2.jpg  (153x201px, t=15m50s, conf=1.00, qualite=0.96)
-    AK_3.jpg  (140x173px, t=15m20s, conf=0.97, qualite=0.94)
+  AK (1 detect., 0 doublons retires) :
+    AK_1.jpg  (341x381px, t=29m55s, conf=1.00, qualite=0.67)
 
-  AL (3 detect., 0 doublons retires) :
-    AL_1.jpg  (184x228px, t=23m20s, conf=0.99, qualite=0.66)
-    AL_2.jpg  (133x172px, t=22m55s, conf=1.00, qualite=0.66)
-    AL_3.jpg  (136x172px, t=23m25s, conf=1.00, qualite=0.63)
+  AL (1 detect., 0 doublons retires) :
+    AL_1.jpg  (309x341px, t=30m05s, conf=1.00, qualite=0.65)
 
-  AM (3 detect., 0 doublons retires) :
-    AM_1.jpg  (576x770px, t=39m50s, conf=1.00, qualite=0.71)
-    AM_2.jpg  (583x781px, t=29m55s, conf=1.00, qualite=0.66)
+  AM (1 detect., 0 doublons retires) :
+    AM_1.jpg  (116x153px, t=36m40s, conf=1.00, qualite=0.69)
 
-  AN (3 detect., 0 doublons retires) :
-    AN_1.jpg  (404x533px, t=29m05s, conf=1.00, qualite=0.94)
-    AN_2.jpg  (172x237px, t=29m10s, conf=1.00, qualite=0.89)
-    AN_3.jpg  (432x557px, t=29m00s, conf=1.00, qualite=0.74)
+  AN (1 detect., 0 doublons retires) :
+    AN_1.jpg  (300x357px, t=38m25s, conf=1.00, qualite=0.71)
 
-  AO (3 detect., 0 doublons retires) :
-    AO_1.jpg  (136x204px, t=33m20s, conf=1.00, qualite=0.69)
-    AO_2.jpg  (125x161px, t=33m35s, conf=0.99, qualite=0.62)
-    AO_3.jpg  (124x164px, t=33m30s, conf=1.00, qualite=0.62)
+  AO (1 detect., 0 doublons retires) :
+    AO_1.jpg  (256x336px, t=38m25s, conf=1.00, qualite=0.80)
 
-  AP (3 detect., 0 doublons retires) :
-    AP_1.jpg  (124x180px, t=37m10s, conf=1.00, qualite=0.85)
-    AP_2.jpg  (180x289px, t=36m10s, conf=1.00, qualite=0.78)
-    AP_3.jpg  (124x176px, t=36m25s, conf=1.00, qualite=0.77)
+  AP (1 detect., 0 doublons retires) :
+    AP_1.jpg  (247x251px, t=38m25s, conf=1.00, qualite=0.82)
 
-  AQ (2 detect., 0 doublons retires) :
-    AQ_1.jpg  (172x220px, t=1m35s, conf=1.00, qualite=0.79)
-
-  AR (2 detect., 0 doublons retires) :
-    AR_1.jpg  (128x165px, t=6m30s, conf=1.00, qualite=0.59)
-
-  AS (2 detect., 0 doublons retires) :
-    AS_1.jpg  (205x284px, t=30m45s, conf=1.00, qualite=0.62)
-    AS_2.jpg  (182x417px, t=10m35s, conf=1.00, qualite=0.58)
-
-  AT (2 detect., 1 doublons retires) :
-    AT_1.jpg  (408x552px, t=24m20s, conf=1.00, qualite=0.63)
-
-  AU (1 detect., 0 doublons retires) :
-    AU_1.jpg  (157x212px, t=1m35s, conf=1.00, qualite=0.66)
-
-  AV (1 detect., 0 doublons retires) :
-    AV_1.jpg  (152x212px, t=1m35s, conf=1.00, qualite=0.70)
-
-  AW (1 detect., 0 doublons retires) :
-    AW_1.jpg  (181x201px, t=4m30s, conf=1.00, qualite=0.63)
-
-  AX (1 detect., 0 doublons retires) :
-    AX_1.jpg  (161x225px, t=9m25s, conf=1.00, qualite=0.88)
-
-  AY (1 detect., 0 doublons retires) :
-    AY_1.jpg  (148x204px, t=22m15s, conf=1.00, qualite=0.74)
-
-  AZ (1 detect., 0 doublons retires) :
-    AZ_1.jpg  (245x317px, t=23m30s, conf=0.96, qualite=0.68)
-
-  BA (1 detect., 0 doublons retires) :
-    BA_1.jpg  (216x276px, t=23m30s, conf=1.00, qualite=0.71)
-
-  BB (1 detect., 0 doublons retires) :
-    BB_1.jpg  (305x436px, t=24m05s, conf=1.00, qualite=0.68)
-
-  BC (1 detect., 0 doublons retires) :
-    BC_1.jpg  (164x241px, t=24m15s, conf=1.00, qualite=0.70)
-
-  BD (1 detect., 0 doublons retires) :
-    BD_1.jpg  (240x344px, t=26m50s, conf=1.00, qualite=0.62)
-
-  BE (1 detect., 0 doublons retires) :
-    BE_1.jpg  (433x548px, t=27m00s, conf=1.00, qualite=0.69)
-
-  BF (1 detect., 0 doublons retires) :
-    BF_1.jpg  (117x173px, t=27m00s, conf=1.00, qualite=0.94)
-
-  BG (1 detect., 0 doublons retires) :
-    BG_1.jpg  (212x256px, t=29m00s, conf=1.00, qualite=0.93)
-
-  BH (1 detect., 0 doublons retires) :
-    BH_1.jpg  (185x244px, t=29m10s, conf=1.00, qualite=0.90)
-
-  BI (1 detect., 0 doublons retires) :
-    BI_1.jpg  (248x393px, t=31m15s, conf=1.00, qualite=0.62)
-
-  BJ (1 detect., 0 doublons retires) :
-    BJ_1.jpg  (317x449px, t=31m50s, conf=1.00, qualite=0.65)
-
-  BK (1 detect., 0 doublons retires) :
-    BK_1.jpg  (144x189px, t=33m25s, conf=1.00, qualite=0.63)
-
-  BL (1 detect., 0 doublons retires) :
-    BL_1.jpg  (132x189px, t=33m25s, conf=0.99, qualite=0.84)
-
-  BM (1 detect., 0 doublons retires) :
-    BM_1.jpg  (151x213px, t=35m55s, conf=0.97, qualite=0.74)
-
-  BN (1 detect., 0 doublons retires) :
-    BN_1.jpg  (272x416px, t=36m10s, conf=1.00, qualite=0.93)
-
-  BO (1 detect., 0 doublons retires) :
-    BO_1.jpg  (224x345px, t=36m15s, conf=1.00, qualite=0.72)
-
-  BP (1 detect., 0 doublons retires) :
-    BP_1.jpg  (188x157px, t=36m15s, conf=0.99, qualite=0.93)
-
-  BQ (1 detect., 0 doublons retires) :
-    BQ_1.jpg  (325x404px, t=36m20s, conf=0.98, qualite=0.68)
-
-  BR (1 detect., 0 doublons retires) :
-    BR_1.jpg  (573x430px, t=36m40s, conf=1.00, qualite=0.77)
-
-  BS (1 detect., 0 doublons retires) :
-    BS_1.jpg  (332x537px, t=37m15s, conf=1.00, qualite=0.69)
-
-  BT (1 detect., 0 doublons retires) :
-    BT_1.jpg  (120x157px, t=37m20s, conf=1.00, qualite=0.88)
-
-  BU (1 detect., 0 doublons retires) :
-    BU_1.jpg  (197x233px, t=37m25s, conf=1.00, qualite=0.67)
-
-  BV (1 detect., 0 doublons retires) :
-    BV_1.jpg  (148x201px, t=37m30s, conf=1.00, qualite=0.72)
-
-  BW (1 detect., 0 doublons retires) :
-    BW_1.jpg  (149x184px, t=37m30s, conf=1.00, qualite=0.72)
-
-  BX (1 detect., 0 doublons retires) :
-    BX_1.jpg  (136x164px, t=37m35s, conf=1.00, qualite=0.92)
-
-  BY (1 detect., 0 doublons retires) :
-    BY_1.jpg  (156x212px, t=37m40s, conf=1.00, qualite=0.65)
-
-  BZ (1 detect., 0 doublons retires) :
-    BZ_1.jpg  (221x225px, t=38m25s, conf=1.00, qualite=0.86)
-
-  CA (1 detect., 0 doublons retires) :
-    CA_1.jpg  (196x288px, t=38m35s, conf=1.00, qualite=0.62)
-  Fichier de presence sauvegarde : P:\SAUVERGARDE\firefox-\_Bel_Bien ensemble\IMG_EXTRACT\caps_251016_09_58_Bel_Bien ensemble\_presence.json
+  AQ (1 detect., 0 doublons retires) :
+    AQ_1.jpg  (244x324px, t=39m10s, conf=1.00, qualite=0.76)
+  Fichier de presence sauvegarde : P:\SAUVERGARDE\firefox-\_Bel_Bien ensemble\IMG_EXTRACT\caps_251017_09_57_Bel_Bien ensemble\_presence.json
 
   Purge du repertoire temporaire...
   Repertoire purge : C:\Temp\Videos\detection
@@ -411,11 +279,11 @@
   TERMINE !
 ============================================================
 
-  79 personne(s) retenue(s) (sur 163 cluster(s) total)
-  149 image(s) sauvegardee(s)
-  94 doublon(s) elimine(s)
-  451 capture(s) rejetee(s) par les filtres
-  Dossier : P:\SAUVERGARDE\firefox-\_Bel_Bien ensemble\IMG_EXTRACT\caps_251016_09_58_Bel_Bien ensemble
+  43 personne(s) retenue(s) (sur 104 cluster(s) total)
+  89 image(s) sauvegardee(s)
+  122 doublon(s) elimine(s)
+  447 capture(s) rejetee(s) par les filtres
+  Dossier : P:\SAUVERGARDE\firefox-\_Bel_Bien ensemble\IMG_EXTRACT\caps_251017_09_57_Bel_Bien ensemble
 
 
-  Video source renommee : 251016_09_58_Bel_Bien ensemble.mp4 -> 251016_09_58_Bel_Bien ensemble_IMG.mp4
+  Video source renommee : 251017_09_57_Bel_Bien ensemble.mp4 -> 251017_09_57_Bel_Bien ensemble_IMG.mp4

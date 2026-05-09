@@ -143,20 +143,6 @@ function formaterTC(s) {
   return `${m}:${String(sec).padStart(2,'0')}`;
 }
 
-function triNaturel(a, b) {
-  const re = /(\d+)|(\D+)/g;
-  const ta = a.match(re), tb = b.match(re);
-  for (let i = 0; i < Math.min(ta.length, tb.length); i++) {
-    const da = parseInt(ta[i]), db = parseInt(tb[i]);
-    if (!isNaN(da) && !isNaN(db)) {
-      if (da !== db) return da - db;
-    } else {
-      if (ta[i] !== tb[i]) return ta[i] < tb[i] ? -1 : 1;
-    }
-  }
-  return ta.length - tb.length;
-}
-
 async function obtenirURLDirecte(fileid) {
   const r = await fetch(`${API}/getpublinkdownload?code=${CODE}&fileid=${fileid}`, FETCH_OPTS);
   const j = await r.json();
@@ -206,7 +192,7 @@ async function init() {
     
     const imagesPCloud = dossierCaps.contents
       .filter(x => x.contenttype && x.contenttype.startsWith("image/"))
-      .sort((a, b) => triNaturel(a.name, b.name));
+      .sort((a, b) => a.name.localeCompare(b.name));
     
     imagesData = imagesPCloud.map(img => ({
       nom: img.name,
