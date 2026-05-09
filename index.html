@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>Caps - test 2</title>
+<title>Caps - test 3</title>
 <style>
 body { font-family: -apple-system, sans-serif; padding: 1em; font-size: 14px; }
 #log { white-space: pre-wrap; background: #f0f0f0; padding: 1em; border-radius: 8px; }
@@ -14,11 +14,12 @@ body { font-family: -apple-system, sans-serif; padding: 1em; font-size: 14px; }
 </style>
 </head>
 <body>
-<h1>Caps - test 2 : timestamps</h1>
+<h1>Caps - test 3 : log local</h1>
 <div id="log">Chargement...</div>
 <script>
 const CODE = "kZf66iZydKuIwvpnOJNRuYtpu244mXTHgPk";
 const API = "https://eapi.pcloud.com";
+const LOG_LOCAL = "log_caps_251010_09_58_Bel_Bien ensemble.txt";
 
 const log = document.getElementById("log");
 function ecrire(msg, classe) {
@@ -54,59 +55,55 @@ function formaterTC(s) {
   return `${m}m${String(sec).padStart(2,'0')}s`;
 }
 
-async function obtenirURLDirecte(fileid) {
-  const r = await fetch(`${API}/getpublinkdownload?code=${CODE}&fileid=${fileid}`, FETCH_OPTS);
-  const j = await r.json();
-  if (j.result !== 0) throw new Error("API getpublinkdownload result=" + j.result + " (" + (j.error || '?') + ")");
-  return "https://" + j.hosts[0] + j.path;
-}
-
 async function test() {
   log.textContent = "";
   try {
-    ecrire("1. Appel showpublink...");
-    const r1 = await fetch(`${API}/showpublink?code=${CODE}`, FETCH_OPTS);
-    const j1 = await r1.json();
-    if (j1.result !== 0) throw new Error("showpublink result=" + j1.result);
-    ecrire("   OK", "ok");
+    ecrire("1. Lecture du log local (depuis GitHub Pages)...");
+    const r1 = await fetch(LOG_LOCAL);
+    if (!r1.ok) throw new Error("HTTP " + r1.status + " sur le log local. Verifier le nom du fichier.");
+    const texteLog = await r1.text();
+    ecrire("   OK : " + texteLog.length + " caracteres", "ok");
     
-    const dossierCaps = j1.metadata.contents.find(x => x.isfolder && x.name.startsWith("caps_"));
-    if (!dossierCaps) throw new Error("Aucun dossier caps_* trouve");
-    ecrire("2. Dossier captures : " + dossierCaps.name, "info");
-    
-    const fichierLog = dossierCaps.contents.find(x => x.name.startsWith("log_caps_") && x.name.endsWith(".txt"));
-    if (!fichierLog) throw new Error("Aucun log_caps_*.txt trouve");
-    ecrire("   Log trouve : " + fichierLog.name, "info");
-    
-    ecrire("3. Recuperation URL directe du log...");
-    const urlLog = await obtenirURLDirecte(fichierLog.fileid);
-    ecrire("   OK", "ok");
-    
-    ecrire("4. Telechargement du log...");
-    const r2 = await fetch(urlLog, FETCH_OPTS);
-    const texteLog = await r2.text();
-    ecrire("   OK : " + texteLog.length + " caracteres recus", "ok");
-    
-    ecrire("5. Parsing des timestamps...");
+    ecrire("2. Parsing des timestamps...");
     const tc = parserLog(texteLog);
     const noms = Object.keys(tc);
-    ecrire("   OK : " + noms.length + " images avec timestamp", "ok");
-    ecrire("");
+    ecrire("   OK : " + noms.length + " timestamps extraits", "ok");
     
-    ecrire("Echantillon (5 premiers) :");
-    noms.slice(0, 5).forEach(n => ecrire("  " + n + " -> " + formaterTC(tc[n])));
-    ecrire("");
-    ecrire("Echantillon (5 derniers) :");
-    noms.slice(-5).forEach(n => ecrire("  " + n + " -> " + formaterTC(tc[n])));
+    ecrire("3. Appel showpublink (pCloud)...");
+    const r2 = await fetch(`${API}/showpublink?code=${CODE}`, FETCH_OPTS);
+    const j2 = await r2.json();
+    if (j2.result !== 0) throw new Error("showpublink result=" + j2.result);
+    ecrire("   OK", "ok");
     
-    const nbImagesDossier = dossierCaps.contents.filter(x => x.contenttype && x.contenttype.startsWith("image/")).length;
-    ecrire("");
-    ecrire("Coherence : " + nbImagesDossier + " image(s) dans le dossier, " + noms.length + " timestamp(s) dans le log");
-    if (nbImagesDossier === noms.length) {
-      ecrire("OK : tous les timestamps correspondent au nombre d'images", "ok");
+    const dossierCaps = j2.metadata.contents.find(x => x.isfolder && x.name.startsWith("caps_"));
+    if (!dossierCaps) throw new Error("Aucun dossier caps_* trouve");
+    
+    const imagesPCloud = dossierCaps.contents.filter(x => x.contenttype && x.contenttype.startsWith("image/"));
+    ecrire("   " + imagesPCloud.length + " image(s) trouvees sur pCloud", "info");
+    
+    ecrire("4. Verification de coherence log <-> pCloud...");
+    const sansTimestamp = imagesPCloud.filter(img => !(img.name in tc));
+    const sansImage = noms.filter(n => !imagesPCloud.find(img => img.name === n));
+    
+    if (sansTimestamp.length === 0 && sansImage.length === 0) {
+      ecrire("   OK : correspondance parfaite", "ok");
     } else {
-      ecrire("ATTENTION : ecart entre images et timestamps", "err");
+      if (sansTimestamp.length > 0) {
+        ecrire("   " + sansTimestamp.length + " image(s) sans timestamp dans le log :", "err");
+        sansTimestamp.slice(0, 5).forEach(img => ecrire("     " + img.name));
+      }
+      if (sansImage.length > 0) {
+        ecrire("   " + sansImage.length + " timestamp(s) sans image dans pCloud :", "err");
+        sansImage.slice(0, 5).forEach(n => ecrire("     " + n));
+      }
     }
+    
+    ecrire("");
+    ecrire("Echantillon (5 premieres images pCloud avec timestamp) :");
+    imagesPCloud.slice(0, 5).forEach(img => {
+      const t = tc[img.name];
+      ecrire("  " + img.name + " -> " + (t !== undefined ? formaterTC(t) : "??"));
+    });
     
   } catch (e) {
     ecrire("ERREUR : " + e.message, "err");
