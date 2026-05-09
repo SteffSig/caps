@@ -57,38 +57,37 @@ header {
   font-size: 9px;
   padding: 2px 4px;
 }
-/* Vue agrandie */
-#viewer {
+/* Vue video plein ecran */
+#player-overlay {
   display: none;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.95);
+  background: #000;
   z-index: 100;
-  padding: 1em;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
-#viewer.actif { display: flex; }
-#viewer img {
-  max-width: 100%;
-  max-height: 80vh;
+#player-overlay.actif { display: flex; }
+#player-overlay video {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  background: #000;
 }
-#viewer .infos {
-  margin-top: 1em;
-  font-size: 14px;
-  text-align: center;
+#player-overlay .barre {
+  padding: 0.5em 1em;
+  background: #1a1a1a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
 }
-#viewer .fermer {
-  position: absolute;
-  top: 1em; right: 1em;
-  background: rgba(255,255,255,0.2);
+#player-overlay button {
+  background: rgba(255,255,255,0.15);
   border: none;
   color: #fff;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  font-size: 20px;
+  padding: 0.4em 0.8em;
+  border-radius: 6px;
+  font-size: 14px;
   cursor: pointer;
 }
 </style>
@@ -98,10 +97,13 @@ header {
   <div id="status">Chargement...</div>
 </header>
 <div id="grille"></div>
-<div id="viewer">
-  <button class="fermer" onclick="fermerViewer()">×</button>
-  <img id="viewer-img">
-  <div class="infos" id="viewer-infos"></div>
+
+<div id="player-overlay">
+  <div class="barre">
+    <span id="player-info"></span>
+    <button onclick="fermerPlayer()">Fermer</button>
+  </div>
+  <video id="player" playsinline controls preload="metadata"></video>
 </div>
 
 <script>
@@ -112,6 +114,9 @@ const FETCH_OPTS = { referrerPolicy: "no-referrer" };
 
 const statusEl = document.getElementById("status");
 const grille = document.getElementById("grille");
+const player = document.getElementById("player");
+const playerOverlay = document.getElementById("player-overlay");
+const playerInfo = document.getElementById("player-info");
 
 function setStatus(s) { statusEl.textContent = s; }
 
@@ -120,9 +125,7 @@ function parserLog(texte) {
   const re = /(\S+\.(?:jpg|jpeg|png))\s+\(\d+x\d+px,\s*t=(?:(\d+)h)?(\d+)m(\d+)s/i;
   for (const ligne of texte.split('\n')) {
     const m = ligne.match(re);
-    if (m) {
-      tc[m[1]] = (m[2] ? parseInt(m[2]) : 0) * 3600 + parseInt(m[3]) * 60 + parseInt(m[4]);
-    }
+    if (m) tc[m[1]] = (m[2] ? parseInt(m[2]) : 0) * 3600 + parseInt(m[3]) * 60 + parseInt(m[4]);
   }
   return tc;
 }
@@ -135,7 +138,6 @@ function formaterTC(s) {
   return `${m}:${String(sec).padStart(2,'0')}`;
 }
 
-// Tri naturel pour A_2 avant A_10
 function triNaturel(a, b) {
   const re = /(\d+)|(\D+)/g;
   const ta = a.match(re), tb = b.match(re);
@@ -150,14 +152,16 @@ function triNaturel(a, b) {
   return ta.length - tb.length;
 }
 
-async function obtenirURLImage(fileid) {
+async function obtenirURLDirecte(fileid) {
   const r = await fetch(`${API}/getpublinkdownload?code=${CODE}&fileid=${fileid}`, FETCH_OPTS);
   const j = await r.json();
   if (j.result !== 0) throw new Error("getpublinkdownload result=" + j.result);
   return "https://" + j.hosts[0] + j.path;
 }
 
-let imagesData = []; // [{nom, fileid, tc, url?}]
+let imagesData = [];
+let videoFileid = null;
+let videoURL = null; // mise en cache (URL valable ~4h)
 
 async function init() {
   try {
@@ -168,6 +172,12 @@ async function init() {
     setStatus("Lecture pCloud...");
     const r2 = await fetch(`${API}/showpublink?code=${CODE}`, FETCH_OPTS);
     const j2 = await r2.json();
+    
+    // Recupere la video au niveau racine
+    const videoFile = j2.metadata.contents.find(x => !x.isfolder && x.contenttype && x.contenttype.startsWith("video/"));
+    if (!videoFile) throw new Error("Aucune video trouvee dans le dossier partage");
+    videoFileid = videoFile.fileid;
+    
     const dossierCaps = j2.metadata.contents.find(x => x.isfolder && x.name.startsWith("caps_"));
     const imagesPCloud = dossierCaps.contents
       .filter(x => x.contenttype && x.contenttype.startsWith("image/"))
@@ -181,56 +191,25 @@ async function init() {
     
     setStatus(imagesData.length + " images - chargement...");
     
-    // Cree les cellules immediatement, charge les URL en parallele
     for (const img of imagesData) {
       const cell = document.createElement("div");
       cell.className = "cell";
-      cell.dataset.nom = img.nom;
       cell.innerHTML = `
         <div class="nom">${img.nom}</div>
         <div class="tc">${img.tc !== undefined ? formaterTC(img.tc) : '?'}</div>
       `;
-      cell.addEventListener("click", () => ouvrirViewer(img));
+      cell.addEventListener("click", () => lancerVideo(img));
       grille.appendChild(cell);
     }
     
-    // Charge les URL et ajoute les <img> au fur et a mesure
     let chargees = 0;
     const cells = Array.from(grille.children);
     for (let i = 0; i < imagesData.length; i++) {
       try {
-        imagesData[i].url = await obtenirURLImage(imagesData[i].fileid);
+        imagesData[i].url = await obtenirURLDirecte(imagesData[i].fileid);
         const im = document.createElement("img");
         im.src = imagesData[i].url;
         im.loading = "lazy";
         cells[i].insertBefore(im, cells[i].firstChild);
         chargees++;
-        if (chargees % 10 === 0 || chargees === imagesData.length) {
-          setStatus(chargees + " / " + imagesData.length + " images chargees");
-        }
-      } catch (e) {
-        cells[i].style.background = "#600";
-      }
-    }
-    setStatus(imagesData.length + " images");
-    
-  } catch (e) {
-    setStatus("ERREUR : " + e.message);
-  }
-}
-
-function ouvrirViewer(img) {
-  document.getElementById("viewer-img").src = img.url || "";
-  document.getElementById("viewer-infos").textContent = 
-    img.nom + " — " + (img.tc !== undefined ? formaterTC(img.tc) : "?");
-  document.getElementById("viewer").classList.add("actif");
-}
-
-function fermerViewer() {
-  document.getElementById("viewer").classList.remove("actif");
-}
-
-init();
-</script>
-</body>
-</html>
+        if (chargees % 10
