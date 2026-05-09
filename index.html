@@ -9,25 +9,21 @@
 * { box-sizing: border-box; }
 body {
   font-family: -apple-system, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #000;
-  color: #fff;
+  margin: 0; padding: 0;
+  background: #000; color: #fff;
 }
 header {
   padding: 0.5em 1em;
   background: #1a1a1a;
   font-size: 13px;
   position: sticky;
-  top: 0;
-  z-index: 10;
+  top: 0; z-index: 10;
 }
 #status { color: #888; }
 #grille {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  padding: 2px;
+  gap: 2px; padding: 2px;
 }
 .cell {
   position: relative;
@@ -37,8 +33,7 @@ header {
   cursor: pointer;
 }
 .cell img {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
   display: block;
 }
@@ -57,7 +52,6 @@ header {
   font-size: 9px;
   padding: 2px 4px;
 }
-/* Vue video plein ecran */
 #player-overlay {
   display: none;
   position: fixed;
@@ -68,8 +62,7 @@ header {
 }
 #player-overlay.actif { display: flex; }
 #player-overlay video {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: contain;
   background: #000;
 }
@@ -83,12 +76,10 @@ header {
 }
 #player-overlay button {
   background: rgba(255,255,255,0.15);
-  border: none;
-  color: #fff;
+  border: none; color: #fff;
   padding: 0.4em 0.8em;
   border-radius: 6px;
   font-size: 14px;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -161,21 +152,22 @@ async function obtenirURLDirecte(fileid) {
 
 let imagesData = [];
 let videoFileid = null;
-let videoURL = null; // mise en cache (URL valable ~4h)
+let videoURL = null;
 
 async function init() {
   try {
-    setStatus("Lecture du log...");
-    const r1 = await fetch(LOG_LOCAL);
-    const tc = parserLog(await r1.text());
+    setStatus("Lecture du log et de pCloud...");
     
-    setStatus("Lecture pCloud...");
-    const r2 = await fetch(`${API}/showpublink?code=${CODE}`, FETCH_OPTS);
-    const j2 = await r2.json();
+    // Lance les 2 requetes en parallele
+    const [tcResp, j2] = await Promise.all([
+      fetch(LOG_LOCAL).then(r => r.text()).then(parserLog),
+      fetch(`${API}/showpublink?code=${CODE}`, FETCH_OPTS).then(r => r.json())
+    ]);
     
-    // Recupere la video au niveau racine
+    if (j2.result !== 0) throw new Error("showpublink result=" + j2.result);
+    
     const videoFile = j2.metadata.contents.find(x => !x.isfolder && x.contenttype && x.contenttype.startsWith("video/"));
-    if (!videoFile) throw new Error("Aucune video trouvee dans le dossier partage");
+    if (!videoFile) throw new Error("Aucune video trouvee");
     videoFileid = videoFile.fileid;
     
     const dossierCaps = j2.metadata.contents.find(x => x.isfolder && x.name.startsWith("caps_"));
@@ -186,11 +178,12 @@ async function init() {
     imagesData = imagesPCloud.map(img => ({
       nom: img.name,
       fileid: img.fileid,
-      tc: tc[img.name]
+      tc: tcResp[img.name]
     }));
     
-    setStatus(imagesData.length + " images - chargement...");
-    
+    // Cree d'abord toutes les cellules vides (affichage immediat de la structure)
+    setStatus(imagesData.length + " images - chargement en cours...");
+    const cells = [];
     for (const img of imagesData) {
       const cell = document.createElement("div");
       cell.className = "cell";
@@ -200,16 +193,73 @@ async function init() {
       `;
       cell.addEventListener("click", () => lancerVideo(img));
       grille.appendChild(cell);
+      cells.push(cell);
     }
     
+    // Maintenant, lance TOUS les appels URL en parallele
     let chargees = 0;
-    const cells = Array.from(grille.children);
-    for (let i = 0; i < imagesData.length; i++) {
+    await Promise.all(imagesData.map(async (img, i) => {
       try {
-        imagesData[i].url = await obtenirURLDirecte(imagesData[i].fileid);
+        img.url = await obtenirURLDirecte(img.fileid);
         const im = document.createElement("img");
-        im.src = imagesData[i].url;
+        im.src = img.url;
         im.loading = "lazy";
         cells[i].insertBefore(im, cells[i].firstChild);
         chargees++;
-        if (chargees % 10
+        if (chargees % 20 === 0 || chargees === imagesData.length) {
+          setStatus(chargees + " / " + imagesData.length);
+        }
+      } catch (e) {
+        cells[i].style.background = "#600";
+      }
+    }));
+    
+    setStatus(imagesData.length + " images");
+    
+  } catch (e) {
+    setStatus("ERREUR : " + e.message);
+  }
+}
+
+async function lancerVideo(img) {
+  if (img.tc === undefined) {
+    alert("Aucun timestamp pour " + img.nom);
+    return;
+  }
+  
+  playerInfo.textContent = img.nom + " — " + formaterTC(img.tc);
+  playerOverlay.classList.add("actif");
+  
+  try {
+    if (!videoURL) {
+      videoURL = await obtenirURLDirecte(videoFileid);
+    }
+    if (player.src !== videoURL) {
+      player.src = videoURL;
+    }
+    
+    const seek = () => {
+      player.currentTime = img.tc;
+      player.pause();
+    };
+    
+    if (player.readyState >= 1) {
+      seek();
+    } else {
+      player.addEventListener("loadedmetadata", seek, { once: true });
+    }
+  } catch (e) {
+    alert("Erreur video : " + e.message);
+    fermerPlayer();
+  }
+}
+
+function fermerPlayer() {
+  player.pause();
+  playerOverlay.classList.remove("actif");
+}
+
+init();
+</script>
+</body>
+</html>
