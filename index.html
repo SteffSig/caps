@@ -4,32 +4,116 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>Caps - test 3</title>
+<title>Caps</title>
 <style>
-body { font-family: -apple-system, sans-serif; padding: 1em; font-size: 14px; }
-#log { white-space: pre-wrap; background: #f0f0f0; padding: 1em; border-radius: 8px; }
-.ok { color: green; }
-.err { color: red; }
-.info { color: #555; }
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+}
+header {
+  padding: 0.5em 1em;
+  background: #1a1a1a;
+  font-size: 13px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+#status { color: #888; }
+#grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: 2px;
+}
+.cell {
+  position: relative;
+  aspect-ratio: 1;
+  background: #1a1a1a;
+  overflow: hidden;
+  cursor: pointer;
+}
+.cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cell .nom {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.7);
+  font-size: 10px;
+  padding: 2px 4px;
+  text-align: center;
+}
+.cell .tc {
+  position: absolute;
+  top: 0; right: 0;
+  background: rgba(0,0,0,0.7);
+  font-size: 9px;
+  padding: 2px 4px;
+}
+/* Vue agrandie */
+#viewer {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 100;
+  padding: 1em;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#viewer.actif { display: flex; }
+#viewer img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+#viewer .infos {
+  margin-top: 1em;
+  font-size: 14px;
+  text-align: center;
+}
+#viewer .fermer {
+  position: absolute;
+  top: 1em; right: 1em;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
-<h1>Caps - test 3 : log local</h1>
-<div id="log">Chargement...</div>
+<header>
+  <div id="status">Chargement...</div>
+</header>
+<div id="grille"></div>
+<div id="viewer">
+  <button class="fermer" onclick="fermerViewer()">×</button>
+  <img id="viewer-img">
+  <div class="infos" id="viewer-infos"></div>
+</div>
+
 <script>
 const CODE = "kZf66iZydKuIwvpnOJNRuYtpu244mXTHgPk";
 const API = "https://eapi.pcloud.com";
 const LOG_LOCAL = "log_caps_251010_09_58_Bel_Bien ensemble.txt";
-
-const log = document.getElementById("log");
-function ecrire(msg, classe) {
-  const d = document.createElement("div");
-  if (classe) d.className = classe;
-  d.textContent = msg;
-  log.appendChild(d);
-}
-
 const FETCH_OPTS = { referrerPolicy: "no-referrer" };
+
+const statusEl = document.getElementById("status");
+const grille = document.getElementById("grille");
+
+function setStatus(s) { statusEl.textContent = s; }
 
 function parserLog(texte) {
   const tc = {};
@@ -37,11 +121,7 @@ function parserLog(texte) {
   for (const ligne of texte.split('\n')) {
     const m = ligne.match(re);
     if (m) {
-      const nom = m[1];
-      const h = m[2] ? parseInt(m[2]) : 0;
-      const mn = parseInt(m[3]);
-      const s = parseInt(m[4]);
-      tc[nom] = h * 3600 + mn * 60 + s;
+      tc[m[1]] = (m[2] ? parseInt(m[2]) : 0) * 3600 + parseInt(m[3]) * 60 + parseInt(m[4]);
     }
   }
   return tc;
@@ -52,65 +132,105 @@ function formaterTC(s) {
   const m = Math.floor((s % 3600) / 60);
   const sec = s % 60;
   if (h > 0) return `${h}h${String(m).padStart(2,'0')}m${String(sec).padStart(2,'0')}s`;
-  return `${m}m${String(sec).padStart(2,'0')}s`;
+  return `${m}:${String(sec).padStart(2,'0')}`;
 }
 
-async function test() {
-  log.textContent = "";
+// Tri naturel pour A_2 avant A_10
+function triNaturel(a, b) {
+  const re = /(\d+)|(\D+)/g;
+  const ta = a.match(re), tb = b.match(re);
+  for (let i = 0; i < Math.min(ta.length, tb.length); i++) {
+    const da = parseInt(ta[i]), db = parseInt(tb[i]);
+    if (!isNaN(da) && !isNaN(db)) {
+      if (da !== db) return da - db;
+    } else {
+      if (ta[i] !== tb[i]) return ta[i] < tb[i] ? -1 : 1;
+    }
+  }
+  return ta.length - tb.length;
+}
+
+async function obtenirURLImage(fileid) {
+  const r = await fetch(`${API}/getpublinkdownload?code=${CODE}&fileid=${fileid}`, FETCH_OPTS);
+  const j = await r.json();
+  if (j.result !== 0) throw new Error("getpublinkdownload result=" + j.result);
+  return "https://" + j.hosts[0] + j.path;
+}
+
+let imagesData = []; // [{nom, fileid, tc, url?}]
+
+async function init() {
   try {
-    ecrire("1. Lecture du log local (depuis GitHub Pages)...");
+    setStatus("Lecture du log...");
     const r1 = await fetch(LOG_LOCAL);
-    if (!r1.ok) throw new Error("HTTP " + r1.status + " sur le log local. Verifier le nom du fichier.");
-    const texteLog = await r1.text();
-    ecrire("   OK : " + texteLog.length + " caracteres", "ok");
+    const tc = parserLog(await r1.text());
     
-    ecrire("2. Parsing des timestamps...");
-    const tc = parserLog(texteLog);
-    const noms = Object.keys(tc);
-    ecrire("   OK : " + noms.length + " timestamps extraits", "ok");
-    
-    ecrire("3. Appel showpublink (pCloud)...");
+    setStatus("Lecture pCloud...");
     const r2 = await fetch(`${API}/showpublink?code=${CODE}`, FETCH_OPTS);
     const j2 = await r2.json();
-    if (j2.result !== 0) throw new Error("showpublink result=" + j2.result);
-    ecrire("   OK", "ok");
-    
     const dossierCaps = j2.metadata.contents.find(x => x.isfolder && x.name.startsWith("caps_"));
-    if (!dossierCaps) throw new Error("Aucun dossier caps_* trouve");
+    const imagesPCloud = dossierCaps.contents
+      .filter(x => x.contenttype && x.contenttype.startsWith("image/"))
+      .sort((a, b) => triNaturel(a.name, b.name));
     
-    const imagesPCloud = dossierCaps.contents.filter(x => x.contenttype && x.contenttype.startsWith("image/"));
-    ecrire("   " + imagesPCloud.length + " image(s) trouvees sur pCloud", "info");
+    imagesData = imagesPCloud.map(img => ({
+      nom: img.name,
+      fileid: img.fileid,
+      tc: tc[img.name]
+    }));
     
-    ecrire("4. Verification de coherence log <-> pCloud...");
-    const sansTimestamp = imagesPCloud.filter(img => !(img.name in tc));
-    const sansImage = noms.filter(n => !imagesPCloud.find(img => img.name === n));
+    setStatus(imagesData.length + " images - chargement...");
     
-    if (sansTimestamp.length === 0 && sansImage.length === 0) {
-      ecrire("   OK : correspondance parfaite", "ok");
-    } else {
-      if (sansTimestamp.length > 0) {
-        ecrire("   " + sansTimestamp.length + " image(s) sans timestamp dans le log :", "err");
-        sansTimestamp.slice(0, 5).forEach(img => ecrire("     " + img.name));
-      }
-      if (sansImage.length > 0) {
-        ecrire("   " + sansImage.length + " timestamp(s) sans image dans pCloud :", "err");
-        sansImage.slice(0, 5).forEach(n => ecrire("     " + n));
-      }
+    // Cree les cellules immediatement, charge les URL en parallele
+    for (const img of imagesData) {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      cell.dataset.nom = img.nom;
+      cell.innerHTML = `
+        <div class="nom">${img.nom}</div>
+        <div class="tc">${img.tc !== undefined ? formaterTC(img.tc) : '?'}</div>
+      `;
+      cell.addEventListener("click", () => ouvrirViewer(img));
+      grille.appendChild(cell);
     }
     
-    ecrire("");
-    ecrire("Echantillon (5 premieres images pCloud avec timestamp) :");
-    imagesPCloud.slice(0, 5).forEach(img => {
-      const t = tc[img.name];
-      ecrire("  " + img.name + " -> " + (t !== undefined ? formaterTC(t) : "??"));
-    });
+    // Charge les URL et ajoute les <img> au fur et a mesure
+    let chargees = 0;
+    const cells = Array.from(grille.children);
+    for (let i = 0; i < imagesData.length; i++) {
+      try {
+        imagesData[i].url = await obtenirURLImage(imagesData[i].fileid);
+        const im = document.createElement("img");
+        im.src = imagesData[i].url;
+        im.loading = "lazy";
+        cells[i].insertBefore(im, cells[i].firstChild);
+        chargees++;
+        if (chargees % 10 === 0 || chargees === imagesData.length) {
+          setStatus(chargees + " / " + imagesData.length + " images chargees");
+        }
+      } catch (e) {
+        cells[i].style.background = "#600";
+      }
+    }
+    setStatus(imagesData.length + " images");
     
   } catch (e) {
-    ecrire("ERREUR : " + e.message, "err");
+    setStatus("ERREUR : " + e.message);
   }
 }
 
-test();
+function ouvrirViewer(img) {
+  document.getElementById("viewer-img").src = img.url || "";
+  document.getElementById("viewer-infos").textContent = 
+    img.nom + " — " + (img.tc !== undefined ? formaterTC(img.tc) : "?");
+  document.getElementById("viewer").classList.add("actif");
+}
+
+function fermerViewer() {
+  document.getElementById("viewer").classList.remove("actif");
+}
+
+init();
 </script>
 </body>
 </html>
