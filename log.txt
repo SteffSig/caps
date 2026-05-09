@@ -1,16 +1,16 @@
-﻿
+
 ============================================================
   CAPTURES DE VISAGES DANS UNE VIDEO  (v2)
 ============================================================
   Date : 2026-04-08 01:07:56
 
 [1/5] Recuperation de la video...
-  Video : 250825_17_03_Affaire conclue.mp4
+  Video : 250825_17_03_Affaire conclue, tout le monde a quelque chose a vendre.mp4
   Sortie : P:\SAUVERGARDE\firefox-\Julia Vignali-\IMG_EXTRACT\caps_250825_17_03_Affaire conclue, tout le monde a quelque chose a vendre
 
 [2/5] Copie vers le repertoire de travail...
   Repertoire purge : C:\Temp\Videos\detection
-  Copie en cours : P:\SAUVERGARDE\firefox-\Julia Vignali-\250825_17_03_Affaire conclue.mp4
+  Copie en cours : P:\SAUVERGARDE\firefox-\Julia Vignali-\250825_17_03_Affaire conclue, tout le monde a quelque chose a vendre.mp4
            vers  : C:\Temp\Videos\detection\250825_17_03_Affaire conclue, tout le monde a quelque chose a vendre.mp4
   Copie terminee.
 
@@ -268,6 +268,4 @@
   52 doublon(s) elimine(s)
   440 capture(s) rejetee(s) par les filtres
   Dossier : P:\SAUVERGARDE\firefox-\Julia Vignali-\IMG_EXTRACT\caps_250825_17_03_Affaire conclue, tout le monde a quelque chose a vendre
-
-
 
