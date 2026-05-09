@@ -20,6 +20,7 @@ header {
   top: 0; z-index: 10;
 }
 #status { color: #888; }
+#status.err { color: #f88; }
 #grille {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -100,7 +101,7 @@ header {
 <script>
 const CODE = "kZf66iZydKuIwvpnOJNRuYtpu244mXTHgPk";
 const API = "https://eapi.pcloud.com";
-const LOG_LOCAL = "log_caps_251010_09_58_Bel_Bien ensemble.txt";
+const LOG_LOCAL = "log.txt";
 const FETCH_OPTS = { referrerPolicy: "no-referrer" };
 
 const statusEl = document.getElementById("status");
@@ -109,7 +110,17 @@ const player = document.getElementById("player");
 const playerOverlay = document.getElementById("player-overlay");
 const playerInfo = document.getElementById("player-info");
 
-function setStatus(s) { statusEl.textContent = s; }
+function setStatus(s, isErr) {
+  statusEl.textContent = s;
+  statusEl.className = isErr ? "err" : "";
+}
+
+// Extrait le nom de base depuis le log (ligne "Video : NOM.mp4")
+function extraireNomBase(texte) {
+  const re = /Video\s*:\s*(.+?)\.mp4\s*$/im;
+  const m = texte.match(re);
+  return m ? m[1].trim() : null;
+}
 
 function parserLog(texte) {
   const tc = {};
@@ -158,19 +169,38 @@ async function init() {
   try {
     setStatus("Lecture du log et de pCloud...");
     
-    // Lance les 2 requetes en parallele
-    const [tcResp, j2] = await Promise.all([
-      fetch(LOG_LOCAL).then(r => r.text()).then(parserLog),
+    const [texteLog, j2] = await Promise.all([
+      fetch(LOG_LOCAL).then(r => {
+        if (!r.ok) throw new Error("log.txt introuvable sur GitHub");
+        return r.text();
+      }),
       fetch(`${API}/showpublink?code=${CODE}`, FETCH_OPTS).then(r => r.json())
     ]);
     
     if (j2.result !== 0) throw new Error("showpublink result=" + j2.result);
     
-    const videoFile = j2.metadata.contents.find(x => !x.isfolder && x.contenttype && x.contenttype.startsWith("video/"));
-    if (!videoFile) throw new Error("Aucune video trouvee");
+    // Extraction du nom de base
+    const nomBase = extraireNomBase(texteLog);
+    if (!nomBase) throw new Error("Impossible de trouver le nom de la video dans log.txt (ligne 'Video : ...')");
+    
+    // Recherche des matches dans pCloud
+    const racine = j2.metadata.contents;
+    const videos = racine.filter(x => !x.isfolder && x.contenttype && x.contenttype.startsWith("video/") && x.name.includes(nomBase));
+    const dossiers = racine.filter(x => x.isfolder && x.name.startsWith("caps_") && x.name.includes(nomBase));
+    
+    // Verifications
+    if (videos.length === 0) throw new Error("Aucune video '*" + nomBase + "*.mp4' trouvee sur pCloud");
+    if (videos.length > 1) throw new Error(videos.length + " videos correspondent a '" + nomBase + "'. Nettoyer pCloud.");
+    if (dossiers.length === 0) throw new Error("Aucun dossier 'caps_*" + nomBase + "*' trouve sur pCloud");
+    if (dossiers.length > 1) throw new Error(dossiers.length + " dossiers caps correspondent a '" + nomBase + "'. Nettoyer pCloud.");
+    
+    const videoFile = videos[0];
+    const dossierCaps = dossiers[0];
     videoFileid = videoFile.fileid;
     
-    const dossierCaps = j2.metadata.contents.find(x => x.isfolder && x.name.startsWith("caps_"));
+    // Parsing des timestamps
+    const tc = parserLog(texteLog);
+    
     const imagesPCloud = dossierCaps.contents
       .filter(x => x.contenttype && x.contenttype.startsWith("image/"))
       .sort((a, b) => triNaturel(a.name, b.name));
@@ -178,11 +208,12 @@ async function init() {
     imagesData = imagesPCloud.map(img => ({
       nom: img.name,
       fileid: img.fileid,
-      tc: tcResp[img.name]
+      tc: tc[img.name]
     }));
     
-    // Cree d'abord toutes les cellules vides (affichage immediat de la structure)
-    setStatus(imagesData.length + " images - chargement en cours...");
+    setStatus(nomBase + " — " + imagesData.length + " images");
+    
+    // Cellules vides immediatement
     const cells = [];
     for (const img of imagesData) {
       const cell = document.createElement("div");
@@ -196,7 +227,7 @@ async function init() {
       cells.push(cell);
     }
     
-    // Maintenant, lance TOUS les appels URL en parallele
+    // Toutes les URLs en parallele
     let chargees = 0;
     await Promise.all(imagesData.map(async (img, i) => {
       try {
@@ -207,17 +238,17 @@ async function init() {
         cells[i].insertBefore(im, cells[i].firstChild);
         chargees++;
         if (chargees % 20 === 0 || chargees === imagesData.length) {
-          setStatus(chargees + " / " + imagesData.length);
+          setStatus(nomBase + " — " + chargees + " / " + imagesData.length);
         }
       } catch (e) {
         cells[i].style.background = "#600";
       }
     }));
     
-    setStatus(imagesData.length + " images");
+    setStatus(nomBase + " — " + imagesData.length + " images");
     
   } catch (e) {
-    setStatus("ERREUR : " + e.message);
+    setStatus("ERREUR : " + e.message, true);
   }
 }
 
